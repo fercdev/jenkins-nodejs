@@ -35,19 +35,18 @@ pipeline {
                 docker {
                     image 'docker:latest'
                 }
+            }
 
-                environment {
+            environment {
                     DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
                     DOCKER_REPO = 'fercdevv/jenkins-node'
-                }
-
-                steps {
-                    sh '''
-                    echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                    docker build -t $DOCKER_REPO:latest .
-                    docker push $DOCKER_REPO:latest
-                    '''
-                }
+            }
+            steps {
+                sh '''
+                echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                docker build -t $DOCKER_REPO:latest .
+                docker push $DOCKER_REPO:latest
+                '''
             }
         }
     }
